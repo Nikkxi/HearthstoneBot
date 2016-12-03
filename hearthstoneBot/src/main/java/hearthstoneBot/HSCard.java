@@ -52,26 +52,19 @@ public class HSCard {
 
 	@Override
 	public String toString(){
-		String feedback;
+		String feedback = new String();
 
 		Properties prop = HSBot.prop;
+		
+		feedback = feedback.concat( "Name: " + getName() + "\n" );
+		feedback = feedback.concat( "Set: " + getCardSet() + "\n" );
+		feedback = feedback.concat( "Type: " + getType() + "\n" );
+		feedback = feedback.concat( "Rarity: " + getRarity() + "\n" );
 
 		if(prop.getProperty("useGoldCardImages").equals("true")){
-			feedback = new String(
-					"Name: " + getName() + "\n" + 
-					"Set: " + getCardSet() + "\n" + 
-					"Type: " + getType() + "\n" +
-					"Rarity: " + getRarity() + "\n" +
-					"Image: " + getGoldImgURL()
-			);
+			feedback = feedback.concat( "Image: " + getGoldImgURL() );
 		} else {
-			feedback = new String(
-					"Name: " + getName() + "\n" + 
-					"Set: " + getCardSet() + "\n" + 
-					"Type: " + getType() + "\n" +
-					"Rarity: " + getRarity() + "\n" +
-					"Image: " + getImgURL()
-			);
+			feedback = feedback.concat( "Image: " + getImgURL() );
 		}
 
 		return feedback;
