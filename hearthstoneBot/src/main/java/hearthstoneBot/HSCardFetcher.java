@@ -12,7 +12,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 
 public class HSCardFetcher {
 
-
+/*
 	public static void main(String[] args) throws UnirestException{
 		String cardName = "Ysera";
 		
@@ -37,7 +37,7 @@ public class HSCardFetcher {
 		System.out.println(cards.get(matchedIndex).toString());
 		
 	}
-
+*/
 
 	public static List<HSCard> searchForCard(String cardName) throws UnirestException{
 
