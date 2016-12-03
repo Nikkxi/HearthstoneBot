@@ -36,9 +36,9 @@ Finally, run the bot!
 	  
 # Displayed Information
 
-Card Matches
-Detailed Information
-	- Card Name
-	- Set
-	- Rarity
-	- Image
+###Card Matches
+###Detailed Information
+* Card Name
+* Set
+* Rarity
+* Image
