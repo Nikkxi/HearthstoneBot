@@ -4,7 +4,7 @@ A Hearthstone Bot for Discord
 This bot fetches basic Hearthstone card information from the API provided by HearthstoneAPI.com
 
 
-# Setup
+### Setup
 
 Extract the contents of the ZIP file into the folder of your choice.
 
@@ -25,7 +25,7 @@ Follow the prompts to add the bot to your server.
 Finally, run the bot!
 
 
-# Command Usage
+### Command Usage
 
 !HS
 	- Follow this command up with the name of a card.  The bot will return a list of possible matches.
@@ -34,7 +34,7 @@ Finally, run the bot!
 	  
 	  
 	  
-# Displayed Information
+### Displayed Information
 
 ####Card Matches
 ####Detailed Information
