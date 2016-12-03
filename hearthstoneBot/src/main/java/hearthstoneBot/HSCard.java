@@ -1,15 +1,13 @@
 package hearthstoneBot;
 
+import java.util.Properties;
+
 public class HSCard {
 
 	private String name;
 	private String cardSet;
 	private String type;
 	private String rarity;
-	private int cost;
-	private int attack;
-	private int health;
-	private String abilityText;
 	private String imgURL;
 	private String goldImgURL;
 
@@ -37,30 +35,6 @@ public class HSCard {
 	public void setRarity(String rarity) {
 		this.rarity = rarity;
 	}
-	public int getCost() {
-		return cost;
-	}
-	public void setCost(int cost) {
-		this.cost = cost;
-	}
-	public int getAttack() {
-		return attack;
-	}
-	public void setAttack(int attack) {
-		this.attack = attack;
-	}
-	public int getHealth() {
-		return health;
-	}
-	public void setHealth(int health) {
-		this.health = health;
-	}
-	public String getAbilityText() {
-		return abilityText;
-	}
-	public void setAbilityText(String abilityText) {
-		this.abilityText = abilityText;
-	}
 	public String getImgURL() {
 		return imgURL;
 	}
@@ -73,20 +47,33 @@ public class HSCard {
 	public void setGoldImgURL(String goldImgURL) {
 		this.goldImgURL = goldImgURL;
 	}
-	
-	
-	
+
+
+
 	@Override
 	public String toString(){
 		String feedback;
-		
-		feedback = new String(
-				"Name: " + getName() + "\n" + 
-				"Set: " + getCardSet() + "\n" + 
-				"Rarity: " + getRarity() + "\n" +
-				"Image: " + getImgURL()
-				);
-		
+
+		Properties prop = HSBot.prop;
+
+		if(prop.getProperty("useGoldCardImages").equals("true")){
+			feedback = new String(
+					"Name: " + getName() + "\n" + 
+					"Set: " + getCardSet() + "\n" + 
+					"Type: " + getType() + "\n" +
+					"Rarity: " + getRarity() + "\n" +
+					"Image: " + getGoldImgURL()
+			);
+		} else {
+			feedback = new String(
+					"Name: " + getName() + "\n" + 
+					"Set: " + getCardSet() + "\n" + 
+					"Type: " + getType() + "\n" +
+					"Rarity: " + getRarity() + "\n" +
+					"Image: " + getImgURL()
+			);
+		}
+
 		return feedback;
 	}
 

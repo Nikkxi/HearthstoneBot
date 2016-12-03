@@ -16,10 +16,12 @@ import de.btobastian.javacord.entities.message.Message;
 import de.btobastian.javacord.listener.message.MessageCreateListener;
 
 public class HSBot {
+	
+	public static Properties prop;
 
 	public static void main(String[] args){
 
-		Properties prop = new Properties();
+		prop = new Properties();
 		String propFileName = "./config.properties";
 
 
