@@ -17,9 +17,11 @@ import de.btobastian.javacord.listener.message.MessageCreateListener;
 
 public class HSBot {
 
+	public static Properties prop;
+
 	public static void main(String[] args){
 
-		Properties prop = new Properties();
+		prop = new Properties();
 		String propFileName = "./config.properties";
 
 
@@ -38,10 +40,14 @@ public class HSBot {
 		}
 
 		// GET BOT TOKEN
-		String token = prop.getProperty("token");
+		final String token = prop.getProperty("token");
+		final String boundChannel = prop.getProperty("bindToChannel");
+		final String commandPrefix = prop.getProperty("CommandPrefix");
 
 		DiscordAPI api = Javacord.getApi(token, true);
 		api.setGame("HearthstoneBot");
+
+
 
 		// CONNECT BOT
 		api.connect(new FutureCallback<DiscordAPI>(){
@@ -56,34 +62,89 @@ public class HSBot {
 				api.registerListener(new MessageCreateListener(){
 					public void onMessageCreate(DiscordAPI api, Message message){
 
+						boolean isBound = false;
+						if(!boundChannel.isEmpty())
+							isBound = true;
+
+
+						boolean fromBoundChannel = false;
+						if(message.getReceiver().getId().equalsIgnoreCase(boundChannel))
+							fromBoundChannel = true;
+
+
 						// CARD SEARCH
-						if (message.getContent().toUpperCase().startsWith("!HS")){
+						if (isBound && fromBoundChannel && message.getContent().toUpperCase().startsWith(commandPrefix + "HS")){
 
 							String cardName;
 
 							try{
 								cardName = message.getContent().substring(4);
-								//System.out.println("Searching for cards matching '" + cardName + "'");
+
+								List<HSCard> list = HSCardFetcher.searchForCard(cardName);
+
+								if(list.isEmpty()){
+									api.getChannelById(boundChannel).sendMessage("No cards found");
+								} else if (list.size() > 1){
+
+									boolean cardMatches = false;
+									int matchedIndex = 0;
+									String matchedCards = new String("Matches found: \n");
+
+									for(HSCard card:list){
+										if(card.getName().equalsIgnoreCase(cardName)){
+											cardMatches = true;
+											matchedIndex = list.indexOf(card);
+										}
+										matchedCards = matchedCards.concat("  "+card.getName() + "\n");
+									}
+
+									api.getChannelById(boundChannel).sendMessage(matchedCards + "------------------\nBest match: \n\n" + list.get(matchedIndex).toString()); 
+
+								} else {
+									api.getChannelById(boundChannel).sendMessage(list.get(0).toString());
+								}
+								
+								
+								
+								
+							}catch (IndexOutOfBoundsException e){
+								api.getChannelById(boundChannel).sendMessage("No card was specified");
+							} catch (UnirestException e) {
+								api.getChannelById(boundChannel).sendMessage("There was an error processing your search");
+								e.printStackTrace();
+							}
+
+						} else if (!isBound && message.getContent().toUpperCase().startsWith(commandPrefix + "HS")){
+
+							String cardName;
+
+							try{
+								cardName = message.getContent().substring(4);
 
 								List<HSCard> list = HSCardFetcher.searchForCard(cardName);
 
 								if(list.isEmpty()){
 									message.reply("No cards found");
-								}
-								
-								boolean cardMatches = false;
-								int matchedIndex = 0;
-								String matchedCards = new String("Matches found: \n");
-								
-								for(HSCard card:list){
-									if(card.getName().equalsIgnoreCase(cardName)){
-										cardMatches = true;
-										matchedIndex = list.indexOf(card);
+								} else if(list.size() > 1){
+									boolean cardMatches = false;
+									int matchedIndex = 0;
+
+									String matchedCards = new String("Matches found: \n");
+
+									for(HSCard card:list){
+										if(card.getName().equalsIgnoreCase(cardName)){
+											cardMatches = true;
+											matchedIndex = list.indexOf(card);
+										}
+										matchedCards = matchedCards.concat("  "+card.getName() + "\n");
 									}
-									matchedCards = matchedCards.concat("  "+card.getName() + "\n");
+
+									message.reply(matchedCards + "------------------\nBest match: \n\n" + list.get(matchedIndex).toString());
+
+								} else {
+									message.reply(list.get(0).toString());
 								}
-								
-								message.reply(matchedCards + "------------------\nBest match: \n\n" + list.get(matchedIndex).toString()); 
+
 
 							}catch (IndexOutOfBoundsException e){
 								message.reply("No card was specified");
@@ -92,7 +153,7 @@ public class HSBot {
 								e.printStackTrace();
 							}
 
-						} 
+						}
 					}
 				});
 

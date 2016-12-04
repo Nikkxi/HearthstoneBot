@@ -37,8 +37,8 @@ public class HSCardFetcher {
 		System.out.println(cards.get(matchedIndex).toString());
 		
 	}
-
 */
+
 	public static List<HSCard> searchForCard(String cardName) throws UnirestException{
 
 		HSCard card;
@@ -80,18 +80,6 @@ public class HSCardFetcher {
 			}
 			if(obj.has("rarity")){
 				card.setRarity((String)obj.get("rarity"));
-			}
-			if(obj.has("cost")){
-				card.setCost((int)obj.getInt("cost"));
-			}
-			if(obj.has("attack")){
-				card.setAttack((int)obj.getInt("attack"));
-			}
-			if(obj.has("health")){
-				card.setHealth((int)obj.getInt("health"));
-			}
-			if(obj.has("text")){
-				card.setAbilityText((String)obj.get("text"));
 			}
 			if(obj.has("img")){
 				card.setImgURL((String)obj.get("img"));
