@@ -42,6 +42,7 @@ public class HSBot {
 		// GET BOT TOKEN
 		final String token = prop.getProperty("token");
 		final String boundChannel = prop.getProperty("bindToChannel");
+		final String commandPrefix = prop.getProperty("CommandPrefix");
 
 		DiscordAPI api = Javacord.getApi(token, true);
 		api.setGame("HearthstoneBot");
@@ -72,7 +73,7 @@ public class HSBot {
 
 
 						// CARD SEARCH
-						if (isBound && fromBoundChannel && message.getContent().toUpperCase().startsWith("!HS")){
+						if (isBound && fromBoundChannel && message.getContent().toUpperCase().startsWith(commandPrefix + "HS")){
 
 							String cardName;
 
@@ -113,7 +114,7 @@ public class HSBot {
 								e.printStackTrace();
 							}
 
-						} else if (!isBound && message.getContent().toUpperCase().startsWith("!HS")){
+						} else if (!isBound && message.getContent().toUpperCase().startsWith(commandPrefix + "HS")){
 
 							String cardName;
 
