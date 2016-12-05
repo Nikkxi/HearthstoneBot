@@ -6,6 +6,8 @@ This bot fetches basic Hearthstone card information from the API provided by Hea
 
 ### Setup
 
+[Download the latest version of the bot](https://github.com/SupCMDr/HearthstoneBot/releases/latest)
+
 Extract the contents of the ZIP file into the folder of your choice.
 
 This bot requires a Bot User to be created.  You can do this by going here - https://discordapp.com/developers/applications/me and
